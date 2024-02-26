@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
+import { CustomLabel } from '@/components/ui/CustomLabel'
 import Colors from '@/constants/Colors'
 import { decks } from '@/constants/data'
 import { useGetLevelsQuery, useGetQuestionQuery } from '@/services/api'
@@ -13,7 +14,7 @@ import {
 	StyleSheet,
 	Text,
 	TouchableOpacity,
-	View,
+	View
 } from 'react-native'
 import { useSharedValue, withTiming } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -42,7 +43,7 @@ function DeckId() {
 
 	const { data: question, refetch } = useGetQuestionQuery({
 		levelId: level,
-		clientId: userId,
+		clientId: userId
 	})
 
 	const positionX = useSharedValue(0)
@@ -87,7 +88,7 @@ function DeckId() {
 							style={{
 								color: Colors.primary,
 								fontSize: 16,
-								fontWeight: 'bold',
+								fontWeight: 'bold'
 							}}
 						>
 							lets be friends
@@ -139,41 +140,41 @@ const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 
 	scrollContainer: {
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'center',
+		justifyContent: 'center'
 	},
 	deck: {
 		width: width - 32,
 		height: height - 50,
 		backgroundColor: 'white',
-		borderRadius: 33,
+		borderRadius: 33
 	},
 	commonInformaion: {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: 25,
-		marginTop: 5,
+		marginTop: 5
 	},
 	topContent: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	deckProgress: {
 		flexDirection: 'row',
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	text: {
 		color: '#00405F',
 		fontSize: 20,
-		fontWeight: 'bold',
+		fontWeight: 'bold'
 	},
 	likes: {
 		flexDirection: 'row',
@@ -183,34 +184,34 @@ const styles = StyleSheet.create({
 		backgroundColor: '#00405F',
 		borderRadius: 10,
 		height: 21,
-		width: 61,
+		width: 61
 	},
 	progressBar: {
 		width: 80,
 		height: 8,
 		backgroundColor: '#EBEBEB',
-		borderRadius: 4,
+		borderRadius: 4
 	},
 	progressColor: {
 		backgroundColor: '#D8D463',
 		height: '100%',
 		width: '30%',
-		borderRadius: 4,
+		borderRadius: 4
 	},
 	img: {
 		height: 32,
-		width: 32,
+		width: 32
 	},
 	levelsInfo: {
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	sectionButtons: {
 		flexDirection: 'column',
 
 		width: '100%',
 
-		gap: 16,
+		gap: 16
 	},
 	buttons: {
 		justifyContent: 'center',
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 		borderRadius: 33.5,
 		height: 33,
-		width: '100%',
+		width: '100%'
 	},
 	commonButton: {
 		alignItems: 'center',
@@ -226,6 +227,6 @@ const styles = StyleSheet.create({
 		borderRadius: 33.5,
 		backgroundColor: Colors.primary,
 		height: 54,
-		width: 248,
-	},
+		width: 248
+	}
 })

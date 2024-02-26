@@ -36,14 +36,14 @@ const CustomBottomSheet = forwardRef<Ref, Props>((props, ref) => {
 const styles = StyleSheet.create({
 	contentContainer: {
 		flex: 1,
-		alignItems: 'center',
+		alignItems: 'center'
 	},
 	containerHeadline: {
 		fontSize: 24,
 		fontWeight: '600',
 		padding: 20,
-		color: '#fff',
-	},
+		color: '#fff'
+	}
 })
 
 export default CustomBottomSheet
