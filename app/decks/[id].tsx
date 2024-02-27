@@ -1,8 +1,10 @@
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
-import { CustomLabel } from '@/components/ui/CustomLabel'
 import Colors from '@/constants/Colors'
 import { decks } from '@/constants/data'
+import getQuestionLevelAndColor, {
+	IQuestonLevelAndColor
+} from '@/features/converters/button-converters'
 import { useGetLevelsQuery, useGetQuestionQuery } from '@/services/api'
 import { AntDesign } from '@expo/vector-icons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -37,7 +39,9 @@ function DeckId() {
 
 	const [userId, setUserId] = useState<any>()
 
-	const [level, setLevel] = useState('2afed974-5981-4de8-83e3-239cffb164da')
+	const [buttonState, setButtonState] = useState<IQuestonLevelAndColor>()
+
+	const [level, setLevel] = useState('')
 
 	const { data: buttons, isLoading, isError } = useGetLevelsQuery(id.toString())
 
@@ -46,6 +50,12 @@ function DeckId() {
 		clientId: userId
 	})
 
+	let textToShow = question?.text || 'Добро пожаловать, готовы выбрать вопрос?'
+
+	useEffect(() => {
+		textToShow = 'Добро пожаловать, готовы выбрать вопрос?'
+	}, [id])
+
 	const positionX = useSharedValue(0)
 
 	const startAnimation = () => {
@@ -53,15 +63,10 @@ function DeckId() {
 		positionX.value = 0
 	}
 
-	const textToShow =
-		question?.text || 'Добро пожаловать, готовы выбрать вопрос?'
-
 	const nextQuestion = (id: string) => {
 		setLevel(id)
 		refetch()
 	}
-
-	console.log(question)
 
 	useEffect(() => {
 		const getUserId = async () => {
@@ -76,9 +81,9 @@ function DeckId() {
 	}
 
 	return (
-		<SafeAreaView style={styles.wrapper}>
+		<SafeAreaView style={styles.container}>
 			<View style={styles.deck}>
-				<View style={{ margin: 20, flex: 1, gap: 20 }}>
+				<View style={styles.wrapper}>
 					<View style={styles.topContent}>
 						<View style={styles.deckProgress}>
 							<Image source={decks[0].img} style={styles.img} />
@@ -100,7 +105,12 @@ function DeckId() {
 					</View>
 
 					<View style={styles.commonInformaion}>
-						<Card color='#4980A3' text={textToShow} positionX={positionX} />
+						<Card
+							level={buttonState}
+							color={Colors.beige}
+							text={textToShow}
+							positionX={positionX}
+						/>
 					</View>
 
 					<View style={styles.levelsInfo}>
@@ -116,11 +126,12 @@ function DeckId() {
 							buttons.map((button: any) => {
 								return (
 									<Button
-										key={button.id}
+										key={button.ID}
 										title={button.Name}
 										onPress={() => {
 											nextQuestion(button.ID)
-											startAnimation() // Вызов функции анимации
+											startAnimation()
+											setButtonState(getQuestionLevelAndColor(button.Name))
 										}}
 										color={'#919F67'}
 										size='large'
@@ -137,20 +148,24 @@ function DeckId() {
 export default DeckId
 
 const styles = StyleSheet.create({
-	wrapper: {
+	container: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-
+	wrapper: {
+		margin: 20,
+		flex: 1,
+		gap: 12
+	},
 	scrollContainer: {
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
 	deck: {
-		width: width - 32,
-		height: height - 50,
+		width: width - 40,
+		height: height * 0.87,
 		backgroundColor: 'white',
 		borderRadius: 33
 	},
@@ -208,10 +223,9 @@ const styles = StyleSheet.create({
 	},
 	sectionButtons: {
 		flexDirection: 'column',
-
+		height: '22%',
 		width: '100%',
-
-		gap: 16
+		gap: 12
 	},
 	buttons: {
 		justifyContent: 'center',
